@@ -7,6 +7,7 @@ const client = new Discord.Client();
 // CONTEÚDO EXTERNO
 import {
     globalUseFunctions,
+    guildMemberAdd,
 } from './controllers/index';
 
 import {
@@ -19,39 +20,23 @@ import { Config } from '../config';
 
 
 client.on('ready',async function () {
-        console.log(`
- /////////////////////////////////////////////////////////////////////////////////
-                                    BOT INICIADO
- /////////////////////////////////////////////////////////////////////////////////      
-    `)
-    // COMANDOS DE INICIALIZAÇÃO
-        // COMANDO PARA SETAR A PRESENÇA DE JOGO DO BOT
-        try {
-        client.user.setPresence({
-        activity: {
-            name : '!help para ajuda',
-            type: 0,
-            },
-        })
-        console.log(' | CONFIGURAÇÃO DE PRESENÇA - FUNCIONAL')
-
-        } catch (error) {
-            console.log(' | CONFIGURAÇÃO DE PRESENÇA - | ERROR |')
-        }
-
-        // COMANDO PARA AJUSTAR A PÁGINA DE REAÇÃO PARA O BOT
-        // try {
-        //     GetCargos(client)
-        // } catch(error) {
-        //     console.log(error, " | falha na execução GetCargos()")
-        // }
-
-
-
+    console.log(`
+    /////////////////////////////////////////////////////////////////////////////////
+                                        BOT INICIADO
+    /////////////////////////////////////////////////////////////////////////////////`)
+    
+    client.user.setPresence({
+    activity: {
+        name : `Escreva ${Config.getPrefix()}help para ajuda`,
+        type: 0,
+        },
+    })
+    client.user.setAvatar(Config.getBotAvatar())
+        .catch( (err) => console.log(" | ERROR CHANGE AVATAR - mundando avatar muito rápido, tente novamente mais tarde"));
 
     // COMANDO COM PROCESSO INCLUIDO
         client.on('guildMemberAdd', function (member) {
-            ChannelWelcome.Message(member, client)
+            guildMemberAdd.memberJoinServer(member, client)
         });
 
         client.on('message', async (message) => {
@@ -68,7 +53,6 @@ client.on('ready',async function () {
             var loli_num = Math.floor(Math.random() * 27)
             for (const chave of content) {
                 if (chave === 'loli') {
-                    console.log(' | PROTEÇÃO CONTRA LOLIS ATIVADO')
                     
                     fs.readdir(`./images/`, () => {
                         const attachment = new Discord.MessageAttachment(``)
@@ -83,8 +67,7 @@ client.on('ready',async function () {
             }
 
 
-        if (message.content.startsWith('!')) {
-            console.log(' | COMANDO DETECTADO')
+        if (message.content.startsWith(`${Config.getPrefix()}`)) {
             switch (message.content) {
                 
                 case '!olá': botMessages.meDaOi(message)                            // RESPOSTA REFERENTE A UMA CONVERSA COM O BOT
