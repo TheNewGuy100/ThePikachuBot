@@ -1,0 +1,2 @@
+# ThePikachuBot
+personal discord bot
