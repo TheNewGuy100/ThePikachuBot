@@ -4,14 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "tsc-watch --noEmit --onSuccess \"ts-node system/index.ts\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.5.1",
+    "@typeit/discord": "^4.0.10",
+    "discord.js": "^12.5.3",
     "is-mingw": "^2.0.0",
-    "jimp": "^0.16.1"
+    "jimp": "^0.16.1",
+    "ts-node": "^10.1.0",
+    "tsconfig-paths": "^3.10.1",
+    "typescript": "^4.3.5"
+  },
+  "devDependencies": {
+    "@types/node": "^16.4.3",
+    "tsc-watch": "^4.4.0"
   }
 }
