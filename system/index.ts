@@ -1,29 +1,30 @@
-// CONTEÚDO NECESSÁRIO ( PADRÃO )
 import * as Discord from 'discord.js';
 import * as fs from 'fs';
 
+require('module-alias/register');
+
 const client = new Discord.Client();
 
-// CONTEÚDO EXTERNO
 import {
     globalUseFunctions,
     guildMemberAdd,
-} from './controllers/index';
+} from '@controllers';
 
 import {
     botMessages,
     ChannelWelcome,
-} from '../models/index.models';
+    systemError,
+} from '@models';
 
-import { Config } from '../config';
+import { Config } from '@botconfig';
 
-
-
-client.on('ready',async function () {
+client.on('ready', async function () {
     console.log(`
     /////////////////////////////////////////////////////////////////////////////////
                                         BOT INICIADO
     /////////////////////////////////////////////////////////////////////////////////`)
+
+    const prefix = Config.getPrefix();
     
     client.user.setPresence({
     activity: {
@@ -31,22 +32,25 @@ client.on('ready',async function () {
         type: 0,
         },
     })
+
+    client.on('guildMemberAdd', async function (member) {
+        guildMemberAdd.memberJoinServer(member, client)
+    });
+
     client.user.setAvatar(Config.getBotAvatar())
         .catch( (err) => console.log(" | ERROR CHANGE AVATAR - mundando avatar muito rápido, tente novamente mais tarde"));
 
-    // COMANDO COM PROCESSO INCLUIDO
-        client.on('guildMemberAdd', function (member) {
-            guildMemberAdd.memberJoinServer(member, client)
-        });
 
-        client.on('message', async (message) => {
-            console.log(' |\n | MENSAGEM RECEBIDA: ', message.content)
-            if (message.author.bot) return;
+        
 
-            // CHECKUP PARA VER SE É O DONO DIGITANDO
-            if (message.author.id == global.author_id) {
-                console.log(' | O AUTOR DA MENSAGEM É O DONO')
-            }
+    client.on('message', (message : Discord.Message) => {
+
+        if (message.author.bot) return {};
+
+        // CHECKUP PARA VER SE É O DONO DIGITANDO
+        if (message.author.id == global.author_id) {
+            console.log(' | O AUTOR DA MENSAGEM É O DONO')
+        }
             
             // CÂNCER (LOLI DETECTOR COM DB DE IMAGENS)
             var content = message.content.toLowerCase().split(' ')
@@ -66,37 +70,34 @@ client.on('ready',async function () {
                 }
             }
 
-
-        if (message.content.startsWith(`${Config.getPrefix()}`)) {
-            switch (message.content) {
+        if (/!/.test(message.content)) {
+            switch (true) {
                 
-                case '!olá': botMessages.meDaOi(message)                            // RESPOSTA REFERENTE A UMA CONVERSA COM O BOT
+                case /!olá/.test(message.content): botMessages.meDaOi(message)                            // RESPOSTA REFERENTE A UMA CONVERSA COM O BOT
                 break
 
-                case '!help': botMessages.helpMe(message)                           // COMANDO PARA PEGAR LISTA DE COMANDOS
+                case /!help/.test(message.content) as any: botMessages.helpMe(message)                           // COMANDO PARA PEGAR LISTA DE COMANDOS
                 break
 
-                case '!clear': globalUseFunctions.clearAll(message)                        // COMANDO QUE VAI LIMPAR UM CANAL INTEIRO
+                case /!clear/.test(message.content) as any: globalUseFunctions.clearAll(message, client.user)                        // COMANDO QUE VAI LIMPAR UM CANAL INTEIRO
                 break
 
-                case '!version' : botMessages.bot_version(message)                  // EXIBE VERSÃO DO BOT
+                case /!version/.test(message.content) as any: botMessages.bot_version(message)                  // EXIBE VERSÃO DO BOT
                 break
 
-                case '!boas-vindas' : ChannelWelcome.bemVindo(message)                 // MENSAGEM DE BOAS VINDAS DO SERVER
+                case /!boas-vindas/.test(message.content) as any: ChannelWelcome.bemVindo(message)                 // MENSAGEM DE BOAS VINDAS DO SERVER
                 break
 
-                case '!aslan' : globalUseFunctions.xingamentoAslan(message, global.user_target)   // CHINGA O ASLAN OU QUEM VOCÊ QUISER...
+                case /!aslan/.test(message.content) as any: globalUseFunctions.xingamentoAslan(message, global.user_target)   // CHINGA O ASLAN OU QUEM VOCÊ QUISER...
                 break
 
-                case '!elogio' : globalUseFunctions.elogieMe(message)                      // ELOGIA VOCÊ <3
+                case /!elogio/.test(message.content) as any: globalUseFunctions.elogieMe(message)                      // ELOGIA VOCÊ <3
                 break
 
-                default :   botMessages.mensagemErro(message)                         // CASO USUÁRIO NÃO USE UM COMANDO VÁLIDO
+                default : botMessages.mensagemErro(message)                         // CASO USUÁRIO NÃO USE UM COMANDO VÁLIDO
                 break
-
             }
-        }
+        } 
     })
-
 })
 client.login(Config.getBotToken());

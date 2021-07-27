@@ -1,37 +1,57 @@
+import * as Discord from 'discord.js';
+import * as fs from 'fs';
 export class globalUseFunctions {
     
-    static clearAll(message) {
+    static async clearAll(message : Discord.Message, client : Discord.User) {
         try {
-            if (message.member.hasPermission("ADMINISTRATOR")) {
-                console.log(' | ACESSO PERMITIDO')
-                const channel_tune = message.channel
-                channel_tune.messages.fetch().then( (data) => {
-                    var cal = 0
-                    data.forEach( (data) => {
-                        console.log(data.content)
-                        cal = cal + 1;
+            if ( message.member.hasPermission("ADMINISTRATOR") ) {
+
+                var content = message.content.split(' ')
+                
+                const Embed = new Discord.MessageEmbed()
+                    .setColor('#fcfc00')
+                    .setTitle(`Deletei ${content[1]} mensagens`)
+                    
+                if (!isNaN(content[1] as any) === true) {
+                    await (message.channel as Discord.TextChannel).bulkDelete(parseInt(content[1]))
+                    .catch((err) => {
+                        console.log(err);
+                        Embed.setTitle(`Não consegui Deletar ${content[1]} mensagens`)
+                        Embed.setDescription('❌ Você não pode deletar mensagens anteriores a 14 dias')
                     })
-                    console.log(cal)
-                })
-                    try {
-                        message.channel.bulkDelete(100).then(() => {
-                            message.channel.send("Deletei 100 mensagens").then(message => message.delete(3000))
-                         });
-                    } catch (error) {
-                        console.log(' | HOUVE FALHA NO BULK DELETE, TENTANDO NORMAL DELETE')
-                        message.channel.messages.fetch()
-                        .then( messages => {
-                            messages.forEach( message => {
-                                message.delete()
-                            });
+                
+                    message.channel.send(Embed).then( () => {
+                        message.delete({timeout: 3000})
+                        
+                        message.channel.messages.fetch(client.lastMessageID).then((botMessage : Discord.Message) => {
+                            setTimeout(() => {
+                                botMessage.delete()
+                            }, 3000);
                         })
-                    }
+                    });
+
+                } else {
+                    const Embed = new Discord.MessageEmbed()
+                    .setColor('#fcfc00')
+                    .setTitle(`Operação inválida`)
+                
+                    message.channel.send(Embed).then( () => {
+                        message.delete({timeout: 3000})
+                        
+                        message.channel.messages.fetch(client.lastMessageID).then((botMessage : Discord.Message) => {
+                            setTimeout(() => {
+                                botMessage.delete()
+                            }, 3000);
+                        })
+                    });
+                }
             }
             else {
-                console.log(' | ERRO - FALTA DE PERMISSÃO')
+                console.log('FALTA DE PERMISSÃO')
             }
-        } catch (error) {
-            console.log(' | ERRO - CODIGO "clearALL()"')
+
+        } catch (err) {
+            console.log(err)
         }
     }
 

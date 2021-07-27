@@ -65,9 +65,19 @@ export class botMessages {
 	}
 
 	static meDaOi(message) {
-        const exampleEmbed = new Discord.MessageEmbed()
+        const Embed = new Discord.MessageEmbed()
         .setColor('#fcfc00')
         .setTitle('Pika Pika!')
-        message.channel.send(exampleEmbed);
+        message.channel.send(Embed);
     }
+}
+
+export class systemError {
+	code: number;
+	description: string;
+
+	constructor (code, description) {
+		this.code = code;
+		this.description = description;
+	}
 }
