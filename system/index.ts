@@ -16,19 +16,17 @@ import {
     systemError,
 } from '@models';
 
-import { Config } from '@botconfig';
+import { Prefix, BotAvatar, BotToken } from '@botconfig';
 
 client.on('ready', async function () {
     console.log(`
     /////////////////////////////////////////////////////////////////////////////////
                                         BOT INICIADO
     /////////////////////////////////////////////////////////////////////////////////`)
-
-    const prefix = Config.getPrefix();
     
     client.user.setPresence({
     activity: {
-        name : `Escreva ${Config.getPrefix()}help para ajuda`,
+        name : `Escreva ${Prefix}help para ajuda`,
         type: 0,
         },
     })
@@ -37,7 +35,7 @@ client.on('ready', async function () {
         guildMemberAdd.memberJoinServer(member, client)
     });
 
-    client.user.setAvatar(Config.getBotAvatar())
+    client.user.setAvatar(BotAvatar)
         .catch( (err) => console.log(" | ERROR CHANGE AVATAR - mundando avatar muito rápido, tente novamente mais tarde"));
 
 
@@ -100,4 +98,4 @@ client.on('ready', async function () {
         } 
     })
 })
-client.login(Config.getBotToken());
+client.login(BotToken);

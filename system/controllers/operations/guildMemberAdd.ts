@@ -1,5 +1,5 @@
 import * as Discord from 'discord.js';
-import { Config } from '@botconfig';
+import { MainChannel } from '@botconfig';
 import { systemError } from '@models';
 import * as Canvas from 'canvas';
 
@@ -20,7 +20,7 @@ export class guildMemberAdd {
     static async memberJoinServer(member: Discord.GuildMember, client: Discord.Client) {
         try {
 
-            let channel_info = await client.channels.cache.get(Config.mainChannel());
+            let channel_info = await client.channels.cache.get(MainChannel);
 
             const canvas = Canvas.createCanvas(700, 250);
             const context = canvas.getContext('2d');

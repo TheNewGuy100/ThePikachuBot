@@ -30,6 +30,7 @@
     "@root": ".",
     "@controllers": "system/controllers/index",
     "@models": "models/index.models",
-    "@botconfig": "config.ts"
+    "@botconfig": "system/global/config",
+    "@global": "system/global/index"
   }
 }

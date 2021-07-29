@@ -1,5 +1,7 @@
 import * as Discord from 'discord.js';
 import * as fs from 'fs';
+
+import { clearResponses } from '@global';
 export class globalUseFunctions {
     
     static async clearAll(message : Discord.Message, client : Discord.User) {
@@ -20,30 +22,17 @@ export class globalUseFunctions {
                         Embed.setDescription('❌ Você não pode deletar mensagens anteriores a 14 dias')
                     })
                 
-                    message.channel.send(Embed).then( () => {
-                        message.delete({timeout: 3000})
-                        
-                        message.channel.messages.fetch(client.lastMessageID).then((botMessage : Discord.Message) => {
-                            setTimeout(() => {
-                                botMessage.delete()
-                            }, 3000);
-                        })
-                    });
+                    message.channel.send(Embed);
+
+                    clearResponses(message, client, 3000)
 
                 } else {
                     const Embed = new Discord.MessageEmbed()
                     .setColor('#fcfc00')
                     .setTitle(`Operação inválida`)
                 
-                    message.channel.send(Embed).then( () => {
-                        message.delete({timeout: 3000})
-                        
-                        message.channel.messages.fetch(client.lastMessageID).then((botMessage : Discord.Message) => {
-                            setTimeout(() => {
-                                botMessage.delete()
-                            }, 3000);
-                        })
-                    });
+                    message.channel.send(Embed);
+                    clearResponses(message, client, 3000);
                 }
             }
             else {
