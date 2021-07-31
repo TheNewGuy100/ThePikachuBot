@@ -6,14 +6,13 @@ require('module-alias/register');
 const client = new Discord.Client();
 
 import {
-    globalUseFunctions,
-    guildMemberAdd,
+    functionOperations,
+    textOperations
 } from '@controllers';
 
 import {
     botMessages,
     ChannelWelcome,
-    systemError,
 } from '@models';
 
 import { Prefix, BotAvatar, BotToken } from '@botconfig';
@@ -27,12 +26,13 @@ client.on('ready', async function () {
     client.user.setPresence({
     activity: {
         name : `Escreva ${Prefix}help para ajuda`,
-        type: 0,
+        type: "PLAYING",
+        url: 'yourcustom.url.com'
         },
     })
 
     client.on('guildMemberAdd', async function (member) {
-        guildMemberAdd.memberJoinServer(member, client)
+        textOperations.memberJoinServer(member, client)
     });
 
     client.user.setAvatar(BotAvatar)
@@ -77,7 +77,7 @@ client.on('ready', async function () {
                 case /!help/.test(message.content) as any: botMessages.helpMe(message)                           // COMANDO PARA PEGAR LISTA DE COMANDOS
                 break
 
-                case /!clear/.test(message.content) as any: globalUseFunctions.clearAll(message, client.user)                        // COMANDO QUE VAI LIMPAR UM CANAL INTEIRO
+                case /!clear/.test(message.content) as any: functionOperations.clearAll(message, client)                        // COMANDO QUE VAI LIMPAR UM CANAL INTEIRO
                 break
 
                 case /!version/.test(message.content) as any: botMessages.bot_version(message)                  // EXIBE VERSÃO DO BOT
@@ -86,10 +86,10 @@ client.on('ready', async function () {
                 case /!boas-vindas/.test(message.content) as any: ChannelWelcome.bemVindo(message)                 // MENSAGEM DE BOAS VINDAS DO SERVER
                 break
 
-                case /!aslan/.test(message.content) as any: globalUseFunctions.xingamentoAslan(message, global.user_target)   // CHINGA O ASLAN OU QUEM VOCÊ QUISER...
+                case /!aslan/.test(message.content) as any: functionOperations.xingamentoAslan(message, global.user_target)   // CHINGA O ASLAN OU QUEM VOCÊ QUISER...
                 break
 
-                case /!elogio/.test(message.content) as any: globalUseFunctions.elogieMe(message)                      // ELOGIA VOCÊ <3
+                case /!elogio/.test(message.content) as any: functionOperations.elogieMe(message, client)                      // ELOGIA VOCÊ <3
                 break
 
                 default : botMessages.mensagemErro(message)                         // CASO USUÁRIO NÃO USE UM COMANDO VÁLIDO

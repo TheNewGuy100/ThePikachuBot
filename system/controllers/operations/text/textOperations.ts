@@ -1,10 +1,10 @@
 import * as Discord from 'discord.js';
 import { MainChannel } from '@botconfig';
-import { systemError } from '@models';
+import { systemError } from '@global';
 import * as Canvas from 'canvas';
+import { ErrorCallback } from 'typescript';
 
-
-export class guildMemberAdd {
+export class textOperations {
 
     static applyText = (canvas, text) => {
         const context = canvas.getContext('2d');
@@ -16,15 +16,16 @@ export class guildMemberAdd {
     
         return context.font;
     };
-    
-    static async memberJoinServer(member: Discord.GuildMember, client: Discord.Client) {
+
+    static async memberJoinServer(member: Discord.GuildMember, client: Discord.User | any): Promise< Discord.Message | systemError > {
         try {
 
             let channel_info = await client.channels.cache.get(MainChannel);
 
             const canvas = Canvas.createCanvas(700, 250);
             const context = canvas.getContext('2d');
-            const background = await Canvas.loadImage('https://i.pinimg.com/originals/a9/0b/8c/a90b8cd4869368d99cf58a23fa57d0cd.png');
+            const background = await Canvas.loadImage('https://i.pinimg.com/originals/a9/0b/8c/a90b8cd486dasdasdasdasdasda9368d99cf58a23fa57d0cd.png')
+                                                .catch((error) => {throw error})
 
             context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
@@ -35,7 +36,7 @@ export class guildMemberAdd {
             context.fillStyle = '#ffffff';
             context.fillText('Bem-vindo ao servidor,', 275, 75);
 
-            context.font = guildMemberAdd.applyText(canvas, `${member.displayName}!`);
+            context.font = textOperations.applyText(canvas, `${member.displayName}!`);
             context.fillStyle = '#ffffff';
             context.fillText(`${member.displayName}`, 275, 150);
 
@@ -57,9 +58,9 @@ export class guildMemberAdd {
 
             return (channel_info as Discord.TextChannel).send(`Bem-vindo a ${member.guild.name}, <@${member}>!`, attachment)
         
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            console.log(error)
+            return new systemError(500, `memberJoinServer couldn't handle`, client, error)
         }
-    } 
+    }
 }
-

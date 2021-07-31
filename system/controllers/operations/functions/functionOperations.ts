@@ -1,21 +1,24 @@
 import * as Discord from 'discord.js';
+import { MainChannel } from '@botconfig';
+import { systemError } from '@global';
+import * as Canvas from 'canvas';
 import * as fs from 'fs';
-
 import { clearResponses } from '@global';
-export class globalUseFunctions {
-    
-    static async clearAll(message : Discord.Message, client : Discord.User) {
+
+export class functionOperations {
+
+    static async clearAll(message : Discord.Message, client : Discord.Client) {
         try {
             if ( message.member.hasPermission("ADMINISTRATOR") ) {
 
                 var content = message.content.split(' ')
                 
                 const Embed = new Discord.MessageEmbed()
-                    .setColor('#fcfc00')
-                    .setTitle(`Deletei ${content[1]} mensagens`)
                     
                 if (!isNaN(content[1] as any) === true) {
-                    await (message.channel as Discord.TextChannel).bulkDelete(parseInt(content[1]))
+                    await (message.channel as Discord.TextChannel).bulkDelete(parseInt(content[1]), true)
+                    .then((content) => {Embed.setColor('#fcfc00')
+                                        Embed.setTitle(`Deletei ${content.size} mensagens`)})
                     .catch((err) => {
                         console.log(err);
                         Embed.setTitle(`Não consegui Deletar ${content[1]} mensagens`)
@@ -39,18 +42,20 @@ export class globalUseFunctions {
                 console.log('FALTA DE PERMISSÃO')
             }
 
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            console.log(error)
+            return new systemError(500, `clearAll couldn't handle`, client, error)
         }
     }
 
-    static elogieMe(message) {
+    static elogieMe(message, client : Discord.Client) {
         try {
         var num = Math.floor( Math.random() /* * db.length*/)
         message.channel.send( '<@' + message.author.id + "> ")
         }
         catch (error) {
-            console.log(' | ERRO AO MANDAR MENSAGEM NO function ElogieMe()')
+            console.log(error)
+            return new systemError(500, `elogieMe couldn't handle`, client, error)
         }
     }
 

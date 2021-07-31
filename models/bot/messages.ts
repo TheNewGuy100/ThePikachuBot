@@ -1,3 +1,4 @@
+import { clearResponses } from '@global';
 import Discord from 'discord.js';
 import fs from 'fs';
 
@@ -72,12 +73,3 @@ export class botMessages {
     }
 }
 
-export class systemError {
-	code: number;
-	description: string;
-
-	constructor (code, description) {
-		this.code = code;
-		this.description = description;
-	}
-}
