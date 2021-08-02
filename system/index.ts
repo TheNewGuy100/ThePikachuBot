@@ -39,6 +39,10 @@ client.on('ready', async function () {
     client.user.setAvatar(BotAvatar)
         .catch( () => console.log(" | ERROR CHANGE AVATAR - mundando avatar muito rápido, tente novamente mais tarde"));
 
+    functionOperations.WelcomePageInit(client);
+    functionOperations.CategoryPageInit(client);
+    
+
     client.on('guildMemberRemove', async (member: Discord.GuildMember | Discord.PartialGuildMember) => {
         textOperations.memberLeaveServer(member, client);
     })
@@ -48,7 +52,6 @@ client.on('ready', async function () {
         if (message.author.bot) return {};
             
         globalModules.getLoliScum(message, client);
-        
         globalModules.tapaNaGostosa(message, client);
 
             
@@ -68,15 +71,17 @@ client.on('ready', async function () {
                 case /!version/.test(message.content) as any: botMessages.bot_version(message, client)
                 break
 
-                case /!xingar/.test(message.content) as any: functionOperations.xingamentoAslan(message, global.user_target)
+                case /!xingar/.test(message.content) as any: functionOperations.xingamentoFunction(message, message.mentions) // arrumar
                 break
 
-                case /!elogio/.test(message.content) as any: botMessages.elogieMe(message, client)
+                case /!elogio/.test(message.content) as any: botMessages.elogieMe(message, client)  // arrumar
                 break
 
                 default : break
             }
         } 
     })
+
 })
+
 client.login(BotToken);
