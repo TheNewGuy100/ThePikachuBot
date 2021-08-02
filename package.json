@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "tsc-watch --noEmit --onSuccess \"ts-node system/index.ts\""
+    "start:dev": "tsc-watch --noEmit --onSuccess \"ts-node system/index.ts --trace-warnings\""
   },
   "keywords": [],
   "author": "",

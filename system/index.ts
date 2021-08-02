@@ -16,6 +16,7 @@ import {
 } from '@models';
 
 import { Prefix, BotAvatar, BotToken } from '@botconfig';
+import { globalModules } from '@global';
 
 client.on('ready', async function () {
     console.log(`
@@ -31,69 +32,49 @@ client.on('ready', async function () {
         },
     })
 
-    client.on('guildMemberAdd', async function (member) {
+    client.on('guildMemberAdd', async (member) => {
         textOperations.memberJoinServer(member, client)
     });
 
     client.user.setAvatar(BotAvatar)
-        .catch( (err) => console.log(" | ERROR CHANGE AVATAR - mundando avatar muito rápido, tente novamente mais tarde"));
+        .catch( () => console.log(" | ERROR CHANGE AVATAR - mundando avatar muito rápido, tente novamente mais tarde"));
 
-
-        
+    client.on('guildMemberRemove', async (member: Discord.GuildMember | Discord.PartialGuildMember) => {
+        textOperations.memberLeaveServer(member, client);
+    })
 
     client.on('message', (message : Discord.Message) => {
 
         if (message.author.bot) return {};
-
-        // CHECKUP PARA VER SE É O DONO DIGITANDO
-        if (message.author.id == global.author_id) {
-            console.log(' | O AUTOR DA MENSAGEM É O DONO')
-        }
             
-            // CÂNCER (LOLI DETECTOR COM DB DE IMAGENS)
-            var content = message.content.toLowerCase().split(' ')
-            var loli_num = Math.floor(Math.random() * 27)
-            for (const chave of content) {
-                if (chave === 'loli') {
-                    
-                    fs.readdir(`./images/`, () => {
-                        const attachment = new Discord.MessageAttachment(``)
-                        const embed = new Discord.MessageEmbed()
-                        .setTitle('FBI OPEN UP!')
-                        .setColor('#fcfc00')
-                        .setImage(`attachment://loli_s_${loli_num}.gif`)
-                    
-                        message.channel.send(embed);
-                    })
-                }
-            }
+        globalModules.getLoliScum(message, client);
+        
+        globalModules.tapaNaGostosa(message, client);
+
+            
 
         if (/!/.test(message.content)) {
             switch (true) {
                 
-                case /!olá/.test(message.content): botMessages.meDaOi(message)                            // RESPOSTA REFERENTE A UMA CONVERSA COM O BOT
+                case /!olá/.test(message.content): botMessages.meDaOi(message, client)
                 break
 
-                case /!help/.test(message.content) as any: botMessages.helpMe(message)                           // COMANDO PARA PEGAR LISTA DE COMANDOS
+                case /!help/.test(message.content) as any: botMessages.helpMe(message)
                 break
 
-                case /!clear/.test(message.content) as any: functionOperations.clearAll(message, client)                        // COMANDO QUE VAI LIMPAR UM CANAL INTEIRO
+                case /!clear/.test(message.content) as any: functionOperations.clearAll(message, client)
                 break
 
-                case /!version/.test(message.content) as any: botMessages.bot_version(message)                  // EXIBE VERSÃO DO BOT
+                case /!version/.test(message.content) as any: botMessages.bot_version(message, client)
                 break
 
-                case /!boas-vindas/.test(message.content) as any: ChannelWelcome.bemVindo(message)                 // MENSAGEM DE BOAS VINDAS DO SERVER
+                case /!xingar/.test(message.content) as any: functionOperations.xingamentoAslan(message, global.user_target)
                 break
 
-                case /!aslan/.test(message.content) as any: functionOperations.xingamentoAslan(message, global.user_target)   // CHINGA O ASLAN OU QUEM VOCÊ QUISER...
+                case /!elogio/.test(message.content) as any: botMessages.elogieMe(message, client)
                 break
 
-                case /!elogio/.test(message.content) as any: functionOperations.elogieMe(message, client)                      // ELOGIA VOCÊ <3
-                break
-
-                default : botMessages.mensagemErro(message)                         // CASO USUÁRIO NÃO USE UM COMANDO VÁLIDO
-                break
+                default : break
             }
         } 
     })

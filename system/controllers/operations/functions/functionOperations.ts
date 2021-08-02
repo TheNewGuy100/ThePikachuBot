@@ -1,8 +1,5 @@
 import * as Discord from 'discord.js';
-import { MainChannel } from '@botconfig';
 import { systemError } from '@global';
-import * as Canvas from 'canvas';
-import * as fs from 'fs';
 import { clearResponses } from '@global';
 
 export class functionOperations {
@@ -19,8 +16,7 @@ export class functionOperations {
                     await (message.channel as Discord.TextChannel).bulkDelete(parseInt(content[1]), true)
                     .then((content) => {Embed.setColor('#fcfc00')
                                         Embed.setTitle(`Deletei ${content.size} mensagens`)})
-                    .catch((err) => {
-                        console.log(err);
+                    .catch(() => {
                         Embed.setTitle(`Não consegui Deletar ${content[1]} mensagens`)
                         Embed.setDescription('❌ Você não pode deletar mensagens anteriores a 14 dias')
                     })
@@ -45,17 +41,6 @@ export class functionOperations {
         } catch (error) {
             console.log(error)
             return new systemError(500, `clearAll couldn't handle`, client, error)
-        }
-    }
-
-    static elogieMe(message, client : Discord.Client) {
-        try {
-        var num = Math.floor( Math.random() /* * db.length*/)
-        message.channel.send( '<@' + message.author.id + "> ")
-        }
-        catch (error) {
-            console.log(error)
-            return new systemError(500, `elogieMe couldn't handle`, client, error)
         }
     }
 

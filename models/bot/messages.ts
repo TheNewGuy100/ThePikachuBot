@@ -1,43 +1,24 @@
-import { clearResponses } from '@global';
+import { AuthorId } from './../../system/global/config';
+import { BotName, adminPrefix } from '@botconfig';
+import { clearResponses, systemError } from '@global';
 import Discord from 'discord.js';
 import fs from 'fs';
 
 export class botMessages {
 	
-	static bot_version(message) {
-		const exampleEmbed = new Discord.MessageEmbed()
+	static bot_version(message, client) {
+		const Embed = new Discord.MessageEmbed()
 		.setColor('#fcfc00')
 		.setTitle('TheNextBot')
-		.setAuthor('Nome real:')
-		.setThumbnail('https://wiki.teamfortress.com/w/images/thumb/6/6a/Engineertaunt1.PNG/350px-Engineertaunt1.PNG')
-		.setDescription(`Versão: 0.0.15`)
+		.setAuthor('Author: Pedro Bohn Costa')
+		.setThumbnail('https://i.imgur.com/NG0cOQO.gif')
+		.setDescription(`Versão: 0.1.20`)
 	
-		message.channel.send(exampleEmbed);
+		message.channel.send(Embed);
+		clearResponses(message, client, 10000);
 	}
 
-	static mensagemErro(message) {
-		try {
-			fs.readdir(`./images/`, () => {
-				const attachment = new Discord.MessageAttachment(`./images/error-pikachu.png`)
-				const embed = new Discord.MessageEmbed()
-				.setDescription("ERRO | COMANDO INEXISTENTE")
-				.setColor('#fcfc00')
-				//.attachFiles(attachment)
-				.setImage(`attachment://error-pikachu.png`);
-			
-				message.channel.send({embed})
-				.then( (message) => {
-					setTimeout(() => {
-						message.delete() 
-					}, 5000);
-				})
-			});
-		} catch (error) {
-			console.log(' | ERROR - ocorrido em "mensagemErro()"')
-		}
-	}
-
-	static helpMe(message) {
+	static helpMe(message : Discord.Message) {
 		const exampleEmbed = new Discord.MessageEmbed()
 		.setColor('#fcfc00')
 		.setTitle('Comandos disponíveis')
@@ -54,22 +35,38 @@ export class botMessages {
 		Funções de segundo-plano:
 		loli - você já sabe né...
 	
-		Comandos 'Administrado':
-		!boas-vindas - gera mensagem de boas vindas
-		!clear - Limpa chat
+		${message.author.id === AuthorId 
+			? 	`Comandos '${adminPrefix}':
+				!boas-vindas - gera mensagem de boas vindas
+				!clear - Limpa chat`
+				: ''}
 		`)
 		.setThumbnail('https://www.clipartmax.com/png/full/99-991676_law-book-icon-png.png')
 		.setTimestamp()
-		.setFooter(global.bot_name , 'https://www.pngrepo.com/png/92783/512/checked.png');
+		.setFooter( BotName, 'https://www.pngrepo.com/png/92783/512/checked.png');
 	
 		message.channel.send(exampleEmbed);
 	}
 
-	static meDaOi(message) {
+	static meDaOi(message: Discord.Message, client: Discord.Client) {
         const Embed = new Discord.MessageEmbed()
         .setColor('#fcfc00')
         .setTitle('Pika Pika!')
+		.setImage('https://i.imgur.com/QsnFI7l.gif')
         message.channel.send(Embed);
+
+		clearResponses(message, client, 3500)
+    }
+
+    static elogieMe(message: Discord.Message, client : Discord.Client) {
+        try {
+        var num = Math.floor( Math.random() /* * db.length*/)
+        message.channel.send( '<@' + message.author.id + "> ")
+        }
+        catch (error) {
+            console.log(error)
+            return new systemError(500, `elogieMe couldn't handle`, client, error)
+        }
     }
 }
 
