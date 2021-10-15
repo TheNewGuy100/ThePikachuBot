@@ -1,0 +1,18 @@
+
+version: "3.9"
+services:
+  application:
+    build:  
+      dockerfile: ./dev.dockerfile
+      context: .
+    image: "discord_sex_bot"
+    container_name: "Discord_BOT_1.0.0_NSFW"
+    working_dir: /application
+    volumes:
+      - .:/application
+    env_file: .env
+    command: "npm run start"
+
+        
+    
+    
