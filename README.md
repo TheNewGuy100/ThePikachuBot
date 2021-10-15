@@ -1,37 +1,48 @@
-# ThePikachuBot
-personal discord bot
+<p align="center">
+	<img src="README_CONTENT/pikachu-2-810x540.png" width="200">
+</p>
+<h1 align="center">ThePikachuBot<br>[DISCORD BOT]</h1>
 
-	botar no final do instrução do bot
+<p align="center">
+ <a href="#documentação">Documentação</a>
+ .
+ <a href="#funcionalidades-atual">Funcionalidades</a>
+ .
+ <a href="#dev-log-1">Dev log</a>
+ .
+ <a href="#pendentes-de-ajuste">Ajustes pendentes</a>
+</p>
 
-		BOT A PROVA DE ASLAN
+## Documentação
+	pendente
 
+## Funcionalidades atual
+	Devido a mudança de como a documentação do discord funciona estou pendente de informar aqui.
 
-coisas a fazer para o bot:
+## Dev log 1
+ - [x] bot NSFW
+ - [x] separar arquivos por organizar entre suas respostas, funções, data-base.
+ - [x] se escrever loli o FBI aparece
+ - [x] Logs de .env, API e status do bot
 
- que gera uma mensagem de boas vindas		{trabalhando}
- que gera imagem de boas vindas no chat 	{FEITO}
- que limpa o chat							{trabalhando}
- que mostra a versão do bot					{FEITO}
- que chinga o aslan com data-base			{FEITO}
- que diz que eu sou lindo com data-base		{trabalhando}
- que toca música							
- pokedéx									
- bot que desconecta o aslan automaticamente	
- bot NSFW	
- comando beijo
- comando tapa
- comando abraço
- adicionar sistema de logs de erros
- adicionar sistema de log de comandos
- level up
+## Pendentes de ajuste:
+
+ - [ ] que gera uma mensagem de boas vindas
+ - [ ] que gera imagem de boas vindas no chat
+ - [ ] que limpa o chat	
+ - [ ] que mostra a versão do bot
+ - [ ] que chinga o aslan com data-base
+ - [ ] que diz que eu sou lindo com data-base
+ - [ ] que toca música							
+ - [ ] pokedéx									
+ - [ ] bot que desconecta o aslan automaticamente
+ - [ ] audio caso eu entre em uma sala
+ - [ ] comando beijo
+ - [ ] comando tapa
+ - [ ] comando abraço
+ - [ ] adicionar sistema de logs de erros
+ - [ ] adicionar sistema de log de comandos
+ - [ ] level up
+ - [ ] mercado do servidor
  
- 
-reações do bot as mensagens
- se eu reagir com alguma coisa, aparece o bolsonaro e culpa a dilma
- se escrever loli o FBI aparece
- 
- 
-garantias:
- fazer mensagens para erros que podem ocorrer
- separar arquivos por organizar entre suas respostas, funções, data-base.
  
