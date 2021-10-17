@@ -1,13 +1,18 @@
 
 import { clearResponses } from "../../utils";
 import * as Discord from 'discord.js';
+import { BOT_HELLO_MESSAGE } from "../../../language/enviroment.BR.language";
 
-export const meDaOi = (message: Discord.Message, client: Discord.Client) => {
-    const Embed = new Discord.MessageEmbed()
-    .setColor('#fcfc00')
-    .setTitle('Pika Pika!')
-    .setImage('https://i.imgur.com/QsnFI7l.gif')
-    message.channel.send({embeds:[Embed]});
-
-    clearResponses(message, client, 3500)
+export const meDaOi = async(message: Discord.Message) => {
+    try {
+        const Embed = new Discord.MessageEmbed()
+        .setColor('#fcfc00')
+        .setTitle(BOT_HELLO_MESSAGE)
+        .setImage('https://i.imgur.com/QsnFI7l.gif')
+    
+        const message_sent = await message.channel.send({embeds:[Embed]})
+        clearResponses(message, message_sent, 3500)
+    } catch (error) {
+        console.log(error)
+    }
 }

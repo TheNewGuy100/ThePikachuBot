@@ -1,32 +1,17 @@
 
 import * as Discord from 'discord.js';
+import { BOT_HELP_FIELDS, BOT_HELP_TITLE } from '../../../language/enviroment.BR.language';
 
 export const helpMe = (message : Discord.Message) => {
     const exampleEmbed = new Discord.MessageEmbed()
     .setColor('#fcfc00')
-    .setTitle('Comandos disponíveis')
+    .setTitle(BOT_HELP_TITLE)
     .setAuthor('Pedro Bohn Costa', 'https://openjusticecourtofprotection.files.wordpress.com/2020/07/scale.gif')
-    .setDescription(`
-    Comandos 'Gerais':
-    !help - Guia de comandos
-    !olá - Dá oi para o bot
-    !version - versão do bot
-    !aslan - Xinga o aslan ou quem você escolher
-    !elogio - Elogia você <3!
-    !emoji - 
-
-    Funções de segundo-plano:
-    loli - você já sabe né...
-
-    ${message.author.id === process.env.AUTHOR_ID 
-        ? 	`Comandos '${process.env.ADMIN_PREFIX}':
-            !boas-vindas - gera mensagem de boas vindas
-            !clear - Limpa chat`
-            : ''}
-    `)
+    .setDescription("some description")
     .setThumbnail('https://www.clipartmax.com/png/full/99-991676_law-book-icon-png.png')
     .setTimestamp()
-    .setFooter( process.env.BOT_NAME, 'https://www.pngrepo.com/png/92783/512/checked.png');
-
+    .setFooter( process.env.BOT_NAME, 'https://www.pngrepo.com/png/92783/512/checked.png')
+    .setFields(BOT_HELP_FIELDS(message))
+    
     message.channel.send({embeds:[exampleEmbed]});
 }

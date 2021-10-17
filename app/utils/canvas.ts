@@ -1,6 +1,4 @@
 
-import * as Canvas from 'canvas';
-
 export const applyText = (canvas, text) => {
     const context = canvas.getContext('2d');
     let fontSize = 70;

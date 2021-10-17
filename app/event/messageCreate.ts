@@ -24,7 +24,7 @@ export function ClientMessageCreate() {
             }
     
             case message.content.includes(`${process.env.PREFIX}${process.env.HELLO_COMMAND}`):
-                meDaOi(message, USER_SERVICE.client)
+                meDaOi(message)
                 break;
     
             case message.content.includes(`${process.env.PREFIX}${process.env.HELP_BOT_COMMAND}`):

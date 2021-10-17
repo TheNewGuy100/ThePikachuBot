@@ -12,11 +12,9 @@ export class systemError {
 	code: number;
 	description: string;
 
-	constructor (code, description, client : Discord.Client, exception ?, message ?: Discord.Message) {
-		this.code = code;
-		this.description = description;
+    private async returnError(message: Discord.Message, code, description, exception) {
 
-		const Embed = new Discord.MessageEmbed()
+        const Embed = new Discord.MessageEmbed()
         .setColor('#fcfc00')
         .setAuthor( code === 0 ? ''
                             : code >= 300 && code < 500 
@@ -32,19 +30,16 @@ export class systemError {
             Embed.setDescription(`**NÃO ENTENDI O QUE FAZER**`);
         }
 
+        const message_sent = await message.channel.send({embeds:[Embed]});
+        clearResponses(message, message_sent, 3000);
+    }
+
+	constructor (code, description, exception ?, message ?: Discord.Message) {
+		this.code = code;
+		this.description = description;
+
         console.log(' | exception caught: ', this.code = code, this.description = description)
 
-        if ( message === undefined ) {
-
-            let channel: Discord.Channel = client.channels.cache.get(`${process.env}`)
-
-            if (channel.isText()) {
-                channel.send({embeds:[Embed]})
-            }
-
-        } else {
-            message.channel.send({embeds:[Embed]});
-            clearResponses(message, client, 3000)
-        }
+        this.returnError(message, code, description, exception);
 	}
 }

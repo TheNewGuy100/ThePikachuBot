@@ -18,6 +18,5 @@
     export * from './chat/bot_elogie_me';
 
     // ACTIONS
-    export * from './chat/member_join_server';
     export * from './chat/init/categories_page_init';
     export * from './chat/init/welcome_page_init';

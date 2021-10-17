@@ -1,25 +1,21 @@
 
 import * as Discord from 'discord.js';
+import { USER_SERVICE } from '../../../application';
 import { WelcomePageMock } from '../../../models';
 
 
-export const WelcomePageInit = async (client: Discord.Client) => {
-        
-    const Welcome: Discord.TextChannel = client.channels.cache.get(process.env.WELCOME_CHANNEL) as Discord.TextChannel;
+export const WelcomePageInit = async(client: Discord.Client) => {
 
-    const TheContractRole = client.guilds.cache.get(process.env.GUILD_ID).roles.cache.get(process.env.WELCOME_ROLE);
-    const TheMemberRole = client.guilds.cache.get(process.env.GUILD_ID).roles.cache.get(process.env.MEMBER_ROLE);
-
-    if ( Welcome.id === process.env.WELCOME_CHANNEL) {
-        (await Welcome.messages.fetch({ limit: 100})).map((content) => {
+    if ( USER_SERVICE.welcome_channel.id === process.env.WELCOME_CHANNEL) {
+        (await USER_SERVICE.welcome_channel.messages.fetch({ limit: 100})).map((content) => {
             content.delete().catch()
         })
     }
 
-    let messageSent = await Welcome.send(WelcomePageMock);
+    let messageSent = await USER_SERVICE.welcome_channel.send(WelcomePageMock);
     messageSent.react(process.env.WELCOME_ROLE_EMOJI);
 
-    client.on('messageReactionAdd', async (reaction: Discord.MessageReaction, user: Discord.User | Discord.PartialUser) => {
+    client.on("messageReactionAdd", async (reaction: Discord.MessageReaction, user: Discord.User | Discord.PartialUser) => {
         if (reaction.message.partial) await reaction.message.fetch();
         if (reaction.partial) await reaction.fetch();
         if (user.bot) return;
@@ -27,14 +23,14 @@ export const WelcomePageInit = async (client: Discord.Client) => {
 
         if (reaction.message.channel.id === process.env.WELCOME_CHANNEL) {
             if (reaction.emoji.name === process.env.WELCOME_ROLE_EMOJI) {
-                await reaction.message.guild.members.cache.get(user.id).roles.add(TheContractRole && TheMemberRole);
+                await reaction.message.guild.members.cache.get(user.id).roles.add(USER_SERVICE.welcome_role && USER_SERVICE.member_role);
             }
         } else {
             return;
         }
     })
 
-    client.on('messageReactionRemove', async (reaction: Discord.MessageReaction, user: Discord.User | Discord.PartialUser) => {
+    client.on("messageReactionRemove", async (reaction: Discord.MessageReaction, user: Discord.User | Discord.PartialUser) => {
         if (reaction.message.partial) await reaction.message.fetch();
         if (reaction.partial) await reaction.fetch();
         if (user.bot) return;
@@ -42,7 +38,7 @@ export const WelcomePageInit = async (client: Discord.Client) => {
 
         if (reaction.message.channel.id === process.env.WELCOME_CHANNEL) {
             if (reaction.emoji.name === process.env.WELCOME_ROLE_EMOJI) {
-                await reaction.message.guild.members.cache.get(user.id).roles.remove(TheContractRole && TheMemberRole);
+                await reaction.message.guild.members.cache.get(user.id).roles.remove(USER_SERVICE.welcome_role && USER_SERVICE.member_role);
             }
         } else {
             return;

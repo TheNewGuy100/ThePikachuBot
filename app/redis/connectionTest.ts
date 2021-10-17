@@ -1,14 +1,31 @@
-import axios from "axios"
+
+import chalk from "chalk";
 import ioredis from "ioredis"
+import { REDIS_INIT_ERROR, REDIS_INIT_SUCCESS } from "../../language/enviroment.BR.language";
 
 export class applicationCache {
-    redis: any;
+    redis: ioredis;
 
     constructor() {
         this.redis = new ioredis({
             host: process.env.REDIS_HOST,
             port: process.env.REDIS_PORT
         })
+    }
+
+    async testRedis() {
+
+        this.set("test_key", {test: 123});
+
+        const get = await this.get("test_key");
+
+        if (get.test === 123) {
+            console.log("Redis status: " + chalk.green(REDIS_INIT_SUCCESS));
+            return;
+        } else {
+            console.log("Redis status: " + chalk.red(REDIS_INIT_ERROR));
+            return;
+        }
     }
 
     async get(key) {
@@ -26,7 +43,7 @@ export class applicationCache {
     }
 
     async del(key) {
-        return this.redis.del(key)
+        return await this.redis.del(key)
     }
 
 }
