@@ -16,8 +16,8 @@ async function main() {
 
     await USER_SERVICE.init();
 
-    WelcomePageInit(USER_SERVICE.client);
-    CategoryPageInit(USER_SERVICE.client);
+    await WelcomePageInit(USER_SERVICE.client);
+    // await CategoryPageInit(USER_SERVICE.client);
     
     // API SERVICES
     

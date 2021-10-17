@@ -1,7 +1,7 @@
 
 import chalk from "chalk";
 import ioredis from "ioredis"
-import { REDIS_INIT_ERROR, REDIS_INIT_SUCCESS } from "../../language/enviroment.BR.language";
+import { REDIS_INIT_ERROR, REDIS_INIT_SUCCESS } from "../../language";
 
 export class applicationCache {
     redis: ioredis;

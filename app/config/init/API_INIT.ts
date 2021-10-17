@@ -1,8 +1,8 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import chalk from 'chalk';
-import { API_SENDING_INFORMATION, API_SENDING_INFORMATION_DENIED, API_SENDING_INFORMATION_SUCCESS, BOT_COMMANDS_ARRAY } from '../../../language/enviroment.BR.language';
 import { AxiosResponse } from 'axios';
+import { API_SENDING_INFORMATION, API_SENDING_INFORMATION_DENIED, API_SENDING_INFORMATION_SUCCESS, BOT_COMMANDS_ARRAY } from '../../../language';
 
 export class API_DISCORD {
   client: REST;

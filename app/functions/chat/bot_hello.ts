@@ -1,7 +1,7 @@
 
 import { clearResponses } from "../../utils";
 import * as Discord from 'discord.js';
-import { BOT_HELLO_MESSAGE } from "../../../language/enviroment.BR.language";
+import { BOT_HELLO_MESSAGE } from "../../../language";
 
 export const meDaOi = async(message: Discord.Message) => {
     try {

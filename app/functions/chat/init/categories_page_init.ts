@@ -1,6 +1,6 @@
 
 import * as Discord from 'discord.js';
-import { RELATION_ROLES_WITH_EMOJIS } from '../../../../language/enviroment.BR.language';
+import { RELATION_ROLES_WITH_EMOJIS } from '../../../../language';
 import { USER_SERVICE } from '../../../application';
 import { categoryPageMock, gameCategoryMock, programmerMock, suxualityMock } from '../../../models';
 

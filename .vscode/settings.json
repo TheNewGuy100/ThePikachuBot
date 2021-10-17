@@ -9,7 +9,11 @@
         "**/.github":true,
         "**/node_modules":true,
         "**/dist": true,
-        "**/.yarn": true
+        "**/.yarn": true,
+        "**/README.content": true,
+        "**/.prettier**": true,
+        "**/package-lock.json": true,
+        "**/tsconfig.json": true
     },
     "files.associations": {
         "*.env": "env"

@@ -1,5 +1,6 @@
 
 import * as Discord from 'discord.js';
+import { RELATION_ROLES_WITH_EMOJIS } from '../../../../language/brazillian-portuguese/enviroment.BR.language';
 import { USER_SERVICE } from '../../../application';
 import { WelcomePageMock } from '../../../models';
 
@@ -13,7 +14,7 @@ export const WelcomePageInit = async(client: Discord.Client) => {
     }
 
     let messageSent = await USER_SERVICE.welcome_channel.send(WelcomePageMock);
-    messageSent.react(process.env.WELCOME_ROLE_EMOJI);
+    messageSent.react( RELATION_ROLES_WITH_EMOJIS().filter((emoji) => emoji.role === process.env.WELCOME_ROLE)[0].emoji );
 
     client.on("messageReactionAdd", async (reaction: Discord.MessageReaction, user: Discord.User | Discord.PartialUser) => {
         if (reaction.message.partial) await reaction.message.fetch();

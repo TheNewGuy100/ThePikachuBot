@@ -75,7 +75,11 @@
 	Logger de erros, eventos e ações
 </p>
 <p>
-	<img src="https://progress-bar.dev/0" align="center">
+	<img src="https://progress-bar.dev/40" align="center">
+	Sistema de módulos para o usuário adicionar módulos externos da aplicação
+</p>
+<p>
+	<img src="https://progress-bar.dev/20" align="center">
 	Feature de musica pela API do youtube ( para o usuário escutar música )
 </p>
 
@@ -83,18 +87,16 @@
 
  - [ ] que gera uma mensagem de boas vindas
  - [ ] que gera imagem de boas vindas no chat
- - [ ] que limpa o chat	
- - [x] que mostra a versão do bot
+ - [ ] que limpa o chat
  - [ ] que diz que eu sou lindo com data-base
+ - [ ] Gerenciador para administradores
  - [ ] que toca música							
  - [ ] pokedéx									
- - [ ] bot que desconecta o aslan automaticamente
+ - [ ] Logger de eventos do bot
  - [ ] audio caso eu entre em uma sala
  - [ ] comando beijo
  - [ ] comando tapa
  - [ ] comando abraço
- - [ ] adicionar sistema de logs de erros
- - [ ] adicionar sistema de log de comandos
  - [ ] level up
  - [ ] mercado do servidor
 
