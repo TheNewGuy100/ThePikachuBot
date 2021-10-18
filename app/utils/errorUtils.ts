@@ -1,12 +1,13 @@
 import * as Discord from "discord.js";
 import { clearResponses } from ".";
 
-export const searchError = async(channel: Discord.TextBasedChannels, message: string) => {
+export const searchError = async(messageReceived: Discord.Message, message: string) => {
     const embed = new Discord.MessageEmbed()
     .setTitle(message);
 
-    const errorSent = await channel.send({embeds: [embed]});
+    const errorSent = await messageReceived.channel.send({embeds: [embed]});
     setTimeout(() => {
+        messageReceived.delete();
         errorSent.delete();
     }, 3000)
 }

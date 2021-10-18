@@ -82,3 +82,13 @@ export class CLIENT_DISCORD {
     this.music_module_success_emoji = process.env.MUSIC_BOT_SUCCESS_EMOJI
   }
 }
+
+export class informationINIT {
+  name: string;
+  description: string;
+  
+  constructor(name: string, description: string) {
+    this.name = name;
+    this.description = description;
+  }
+}

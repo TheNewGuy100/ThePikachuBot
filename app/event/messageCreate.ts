@@ -48,7 +48,7 @@ export function ClientMessageCreate() {
                     praiseMe(message)
                     break;
         
-                    default : searchError(message.channel, "COMANDO DESCONHECIDO");
+                    default : searchError(message, "COMANDO DESCONHECIDO");
             }
         }
     });
