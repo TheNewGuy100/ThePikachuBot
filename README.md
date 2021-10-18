@@ -22,7 +22,8 @@
 </p>
 
 ## Documentation
-	pendente
+	This is not a production version release at the moment, i'm not giving support for it for now
+	it's only public so you can see and work with it, still a lot of things to work on it.
 
 ## Available commands
 - ***Base commands***: ( all this commands can be changed, except the version )
