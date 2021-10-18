@@ -111,7 +111,7 @@
  - [ ] level up
  - [ ] mercado do servidor
 
-## CONTACTS
+## Contacts
   <p>
     <img align="center" src="README.content/facebook.png" width="45" height="45">
     <a>https://www.facebook.com/profile.php?id=100026288928919</a>
