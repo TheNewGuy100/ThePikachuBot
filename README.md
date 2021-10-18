@@ -8,27 +8,47 @@
 
 
 <p align="center">
- <a href="#documentação">Documentação</a>
+ <a href="#documentation">Documentation</a>
  .
- <a href="#funcionalidades-atual">Funcionalidades</a>
+ <a href="#available-commands">Available commands</a>
  .
  <a href="#dev-log">Dev log</a>
  <br>
- <a href="#pendentes-de-ajuste">Ajustes pendentes</a>
+ <a href="#goals">Goals</a>
  .
- <a href="#contatos">Contatos</a>
+ <a href="#contatos">Contacts</a>
  .
- <a href="#progresso-das-features">Progresso geral</a>
+ <a href="#features-progress">Features progress</a>
 </p>
 
-## Documentação
+## Documentation
 	pendente
 
-## Funcionalidades atual
-	Devido a mudança de como a documentação do discord funciona estou pendente de informar aqui.
+## Available commands
+- ***Base commands***: ( all this commands can be changed, except the version )
+	- **!help**: used to give the user the idea of commands he can use, is dynamic generated.
+	- **!version**: shows the user the bot version, and the author.
+	- **!olá**: says hello to the user.
+	- **!xingar**: curses to the user mentioned.
+	- **!elogio**: praise the user, or the mentioned user. (needs to be fixed).
+	- **[NSFW COMMAND] !konachan**: used to search via query or random from konachan database.
+	- **[NSFW COMMAND] !rule34**: used to search via query or random from rule34 database.
+
+- ***Module commands***: ( you can add modules easy, they are editable aswell, this lists only the ones created by me )
+	- Music Bot: ( in development )
 
 ## Dev log
-<h3 align="center"> ajustes de 16 de outubro de 2021 </h3>
+<h3 align="center"> adjustments made in 17 of october 2021 </h3>
+	
+	- Utilização de módulo implementada ao bot, documentação de como deve ser importado o módulo pendente.
+	- Sistema dinâmico de adição de comandos ao bot, tanto para comandos primários quanto secundários ou administração.
+	- melhoras na parte do código para a utilização do usuário e do programador.
+	- Mudança e aprimoramento do gerenciador de linguagem da aplicação.
+	- Preparação do bot para receber sistema de auto atualização de funções disponíveis no bot.
+	- Inicialização da criação do módulo de música para o bot
+
+
+<h3 align="center"> adjustments made in 16 of october 2021 </h3>
 
 	- Welcome page foi consertada para aplicar a tag role.
 	- Categories channel foi consertada e porem precisa ser finalizada e dinamizada.
@@ -38,33 +58,17 @@
 	- Help do bot agora aprenseta uma aparência modificável e possui categorias para admin, plano secundário e primário.
 	
 
-<h3 align="center"> ajustes de 15 de outubro de 2021 </h3>
+<h3 align="center"> adjustments made in 15 of october 2021 </h3>
 
  	- bot NSFW.
  	- separar arquivos por organizar entre suas respostas, funções, data-base.
  	- se escrever loli o FBI aparece.
  	- Logs de .env, API e status do bot.
 	
-## Progresso das features
-<p>
-	<img src="https://progress-bar.dev/100" align="center">
-	Feature para oferecer ajuda para o usuário (!help)
-</p>
+## Features progress
 <p>
 	<img src="https://progress-bar.dev/100" align="center">
 	Feature para a tela inicial apresentar mensagem e icon para receber o cargo membro
-</p>
-<p>
-	<img src="https://progress-bar.dev/100" align="center">
-	Feature para mostrar a versão do bot (!version)
-</p>
-<p>
-	<img src="https://progress-bar.dev/100" align="center">
-	Feature de pesquisa NSFW para rule34 e konachan
-</p>
-<p>
-	<img src="https://progress-bar.dev/100" align="center">
-	Feature para o bot dar olá para o usuário
 </p>
 <p>
 	<img src="https://progress-bar.dev/70" align="center">
@@ -75,20 +79,26 @@
 	Logger de erros, eventos e ações
 </p>
 <p>
-	<img src="https://progress-bar.dev/40" align="center">
+	<img src="https://progress-bar.dev/80" align="center">
 	Sistema de módulos para o usuário adicionar módulos externos da aplicação
+</p>
+<p>
+	<img src="https://progress-bar.dev/20" align="center">
+	Controle automátio de comandos adicionados (como se fosse um sistema de módulos para comandos)
 </p>
 <p>
 	<img src="https://progress-bar.dev/20" align="center">
 	Feature de musica pela API do youtube ( para o usuário escutar música )
 </p>
 
-## Pendentes de ajuste
-
+## Goals
+	the objective from this bot it's to create a source that everyone can use to have a base bot without any problems,
+	it's going to stay a public project that anyone can work in it. My objective its to make the difficult part of 
+	programming the bot so users can use it as it wishes.
+	
  - [ ] que gera uma mensagem de boas vindas
  - [ ] que gera imagem de boas vindas no chat
  - [ ] que limpa o chat
- - [ ] que diz que eu sou lindo com data-base
  - [ ] Gerenciador para administradores
  - [ ] que toca música							
  - [ ] pokedéx									
