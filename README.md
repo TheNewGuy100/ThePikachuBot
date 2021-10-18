@@ -16,7 +16,7 @@
  <br>
  <a href="#goals">Goals</a>
  .
- <a href="#contatos">Contacts</a>
+ <a href="#contacts">Contacts</a>
  .
  <a href="#features-progress">Features progress</a>
 </p>
@@ -110,7 +110,7 @@
  - [ ] level up
  - [ ] mercado do servidor
 
-## CONTATOS
+## CONTACTS
   <p>
     <img align="center" src="README.content/facebook.png" width="45" height="45">
     <a>https://www.facebook.com/profile.php?id=100026288928919</a>
