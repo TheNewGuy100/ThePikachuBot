@@ -1,4 +1,6 @@
-export const stringRemoveCommandFromParams = (message) => {
+import * as Discord from 'discord.js';
+
+export const stringRemoveCommandFromParams = (message: Discord.Message) => {
     const array = message.content.split(' ');
                   array.shift();
 

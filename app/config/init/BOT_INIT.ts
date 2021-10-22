@@ -31,6 +31,10 @@ export class CLIENT_DISCORD {
   public music_module_music_emoji: string;
   public music_module_success_emoji: string;
 
+  constructor() {
+    this.init()
+  }
+
   async init() {
     this.client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_MEMBERS, Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Discord.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS] });
 
@@ -55,7 +59,6 @@ export class CLIENT_DISCORD {
 
     await this.client.login(process.env.BOT_TOKEN);
     await this.getInformation();
-
     return;
   }
 
@@ -80,15 +83,5 @@ export class CLIENT_DISCORD {
     this.music_module_off_emoji =  process.env.MUSIC_BOT_OFF_EMOJI
     this.music_module_queue_emoji =  process.env.MUSIC_BOT_QUEUE_EMOJI
     this.music_module_success_emoji = process.env.MUSIC_BOT_SUCCESS_EMOJI
-  }
-}
-
-export class informationINIT {
-  name: string;
-  description: string;
-  
-  constructor(name: string, description: string) {
-    this.name = name;
-    this.description = description;
   }
 }

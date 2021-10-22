@@ -22,8 +22,12 @@
 </p>
 
 ## Documentation
-	This is not a production version release at the moment, i'm not giving support for it for now
-	it's only public so you can see and work with it, still a lot of things to work on it.
+	DISCLAIMER:
+	This is a base project of a discord bot with typescript, the objective here is to give a good source
+	of a discord bot that anyone can use. The base of the project is ready, but there are a lot of changes
+	that i want to implement to make the bot better.
+
+	DOCUMENTATION PENDING!
 
 ## Available commands
 - ***Base commands***: ( all this commands can be changed, except the version )
@@ -39,6 +43,15 @@
 	- Music Bot: ( in development )
 
 ## Dev log
+<h3 align="center"> adjustments made in 21 of october 2021 </h3>
+	
+	- Reworked the bot page to be written completly in english
+	- Reworked how the bot find, manage and run the functions so the user can better organize
+	- Reworked a lot of logic and stated using node events to giving the user less things to worry when adding functions
+	- Changed some parts of the code for better perfomance
+	- Base of the bot done, preparing bot for features, modules and small fixes for enviroment language
+
+
 <h3 align="center"> adjustments made in 17 of october 2021 </h3>
 	
 	- Utilização de módulo implementada ao bot, documentação de como deve ser importado o módulo pendente.
@@ -97,19 +110,17 @@
 	it's going to stay a public project that anyone can work in it. My objective its to make the difficult part of 
 	programming the bot so users can use it as it wishes.
 	
- - [ ] que gera uma mensagem de boas vindas
- - [ ] que gera imagem de boas vindas no chat
- - [ ] que limpa o chat
+ - [ ] welcome private message
+ - [ ] welcome image canvas
+ - [ ] clear channel command
  - [ ] Gerenciador para administradores
- - [ ] que toca música							
- - [ ] pokedéx									
+ - [ ] music player														
  - [ ] Logger de eventos do bot
- - [ ] audio caso eu entre em uma sala
- - [ ] comando beijo
- - [ ] comando tapa
- - [ ] comando abraço
+ - [ ] command kiss
+ - [ ] command slap
+ - [ ] api check for free games
  - [ ] level up
- - [ ] mercado do servidor
+ - [ ] server market with SQL
 
 ## Contacts
   <p>

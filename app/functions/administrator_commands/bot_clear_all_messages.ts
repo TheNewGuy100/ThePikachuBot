@@ -1,5 +1,6 @@
 
 import * as Discord from 'discord.js';
+import { USER_SERVICE } from '../../application';
 import { clearResponses, systemError } from '../../utils';
 
 export const information = () => {
@@ -9,8 +10,11 @@ export const information = () => {
     }
 }
 
-export const clearAll = async(message : Discord.Message, client : Discord.Client) => {
-    // try {message.flags.equals
+USER_SERVICE.client.on("messageCreate", async(message: Discord.Message): Promise<null | void> => {
+
+    if (message.author.bot || !message.content.includes(process.env.RULE34_COMMAND)) return;
+
+        // try {message.flags.equals
     //     if ( message.user.hasPermissions() ) {
 
     //         var content = message.content.split(' ')
@@ -47,4 +51,4 @@ export const clearAll = async(message : Discord.Message, client : Discord.Client
     //     console.log(error)
     //     return new systemError(500, `clearAll couldn't handle`, client, error)
     // }
-}
+})

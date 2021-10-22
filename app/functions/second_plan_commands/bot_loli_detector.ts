@@ -1,6 +1,7 @@
 
 import * as Discord from 'discord.js';
 import { LOLI_DETECTOR_MESSAGE } from '../../../language';
+import { USER_SERVICE } from '../../application';
 
 export const information = () => {
     return {
@@ -9,7 +10,10 @@ export const information = () => {
     }
 }
 
-export const getLoliScum = async (message: Discord.Message) => {
+USER_SERVICE.client.on("messageCreate", async(message: Discord.Message): Promise<null | void> => {
+
+    if (message.author.bot) return;
+
     var content = message.content.toLowerCase().split(' ')
     for (const chave of content) {
         if (chave === process.env.LOLI_DETECTOR) {
@@ -21,4 +25,4 @@ export const getLoliScum = async (message: Discord.Message) => {
             message.channel.send({embeds:[embed]});
         }
     }
-}
+})

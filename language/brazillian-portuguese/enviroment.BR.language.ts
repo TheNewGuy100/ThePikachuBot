@@ -1,6 +1,6 @@
 import chalk from "chalk"
 import * as Discord from 'discord.js';
-import { USER_SERVICE } from "../../app/application";
+import { COMMANDS_SERVICE, USER_SERVICE } from "../../app/application";
 import { resolve } from 'path';
 import * as fs from 'fs';
 import { MODULES_INIT } from "./enviroment.BR.modules";
@@ -20,44 +20,9 @@ import { MODULES_INIT } from "./enviroment.BR.modules";
     export const BOT_HELP_TITLE = 'Comandos disponíveis'
 
     export const BOT_LOGIN_MESSAGE = (user) => `Logado como ${chalk.green(user)}!`
-    export const commandMessage = (command): string => "**!" + command.name + "** | " + command.description + "\n"
-    export const activeCommand = (command): string => "**" + command.name + "** | " + command.description + "\n"
 
 
     export const BOT_HELP_FIELDS = (message: Discord.Message): Discord.EmbedFieldData[] => {
-
-        const PrimmaryBotCommands = (): string => {
-            const commands: string[] = [];
-            fs.readdirSync(__dirname + "/../../app/functions/primmary_commands").forEach(async(file) => {
-                const fileContent = require(__dirname + "/../../app/functions/primmary_commands/" + file);
-                const fileInformation = fileContent.information();
-                commands.push(commandMessage(fileInformation))
-            });
-
-            return commands.join("");
-        }
-
-        const SecondPlanBotCommands = ():string => {
-            const commands: string[] = [];
-            fs.readdirSync(__dirname + "/../../app/functions/second_plan_commands").forEach(async(file) => {
-                const fileContent = require(__dirname + "/../../app/functions/second_plan_commands/" + file);
-                const fileInformation = fileContent.information();
-                commands.push(activeCommand(fileInformation))
-            });
-
-            return commands.join("");
-        }
-
-        const administratorCommands = ():string => {
-            const commands: string[] = [];
-            fs.readdirSync(__dirname + "/../../app/functions/administrator_commands").forEach(async(file) => {
-                const fileContent = require(__dirname + "/../../app/functions/administrator_commands/" + file);
-                const fileInformation = fileContent.information();
-                commands.push(activeCommand(fileInformation))
-            });
-
-            return commands.join("");
-        }
 
         const mapModules = MODULES_INIT.map((command) => {
             return "Prefix **" + command.module_prefix + "** | " + command.module_description + "\n"
@@ -66,8 +31,8 @@ import { MODULES_INIT } from "./enviroment.BR.modules";
         
 
         let fields: Discord.EmbedFieldData[] = [
-            { name: "📰 ***Comandos Gerais***", value: PrimmaryBotCommands(), inline: false},
-            { name: "☑️ ***Funções de segundo-plano***", value: SecondPlanBotCommands(), inline: false}
+            { name: "📰 ***Comandos Gerais***", value: COMMANDS_SERVICE.getHelpListFromCommands('primmaryCommands', true), inline: false},
+            { name: "☑️ ***Funções de segundo-plano***", value: COMMANDS_SERVICE.getHelpListFromCommands('secondaryCommands', false), inline: false}
         ]
 
         const getModuleList = resolve(process.env.MODULES_PATH);
@@ -83,7 +48,7 @@ import { MODULES_INIT } from "./enviroment.BR.modules";
         if (message.author.id === process.env.AUTHOR_ID || message.member.roles.cache.some((role) => role.name === process.env.ADMINISTRATOR_ROLE_NAME)) {
             fields.push({
                 name: "📠 ***Comando de administração***",
-                value: administratorCommands(),
+                value: COMMANDS_SERVICE.getHelpListFromCommands('administratorCommands', true),
                 inline: false
             })
         }
