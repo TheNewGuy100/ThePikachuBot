@@ -2,7 +2,7 @@
 
 export class StrategyInfoModel {
     description: string;
-    type: 'admin' | 'passive' | 'active' | 'entry' | 'event';
+    type: 'admin' | 'passive' | 'active' | 'entry' | 'event' | 'config';
 }
 
 export const typeToString = {
@@ -24,6 +24,10 @@ export const typeToString = {
     },
     'event': {
         text: '👑 ***Handlers de Eventos***',
+        position: 5
+    },
+    'config': {
+        text: '⚗️ ***Configurações do Bot***',
         position: 4
     }
 }

@@ -6,7 +6,7 @@ import { IStrategyModel } from 'src/interfaces/strategy';
 class BotKeanuTapaNaGostosa implements IStrategyModel {
     public getInfo(): StrategyInfoModel {
         return {
-            description: 'Detecta quando alguém quer dar um tapa na gostosa',
+            description: 'Keanu ta só observando esperando você dar um tapa na gostosa',
             type: 'passive'
         }
     }

@@ -16,12 +16,13 @@ import AdminClearMessages from './clearMessages.admin.commands';
 import AdminWhipeChatMessages from './whipeChat.admin.commands';
 import WelcomePage from './welcomePage.passive';
 import CategoriesPage from './categoriesPage.passive';
+import ChangeBotAvatar from './changeAvatar.bot.commands';
 
 export const commandMessage = (command, isCommand: boolean): string => `**${isCommand === true ? '!' : ''}` + command.name + "** | " + command.description + "\n";
 
 export default class commands {
     private regExpString = `${process.env.PREFIX}[^ ]*`
-    private regExpCommands = new RegExp(this.regExpString, 'gm');
+    public regExpCommands = new RegExp(this.regExpString, 'gm');
 
     public classes: IStrategyModel[] = [];
     public command: {[key:string]: IStrategyModel} = {};
@@ -41,7 +42,8 @@ export default class commands {
             new AdminClearMessages(),
             new AdminWhipeChatMessages(),
             new WelcomePage(),
-            new CategoriesPage()
+            new CategoriesPage(),
+            new ChangeBotAvatar()
         ]
 
         for (let command of this.classes) {
@@ -58,10 +60,10 @@ export default class commands {
             if (userMessage.author.bot === true) {
                 return null;
             } else {
-                console.log("User message: " + userMessage.content);
                 this.runPassiveCommands(userMessage);
 
                 if (this.regExpCommands.test(userMessage.content)) {
+                    Application.Logger.logUserRunCommand(userMessage);
                     try {
                         this.command[userMessage.content.match(this.regExpCommands)[0]].handleMessage(userMessage);
                     } catch (err) {

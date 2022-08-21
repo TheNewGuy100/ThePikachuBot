@@ -3,14 +3,16 @@ import commands from './commands/index';
 import * as Config from "./config";
 import * as Discord from 'discord.js';
 
-import { interactionCreate } from "./fixed-events/interactionCreate";
+import { interactionCreate } from "./events/interactionCreate";
 import { BOT_LOGIN_MESSAGE } from "./language";
+import Logger from './utils/logger';
 
 Config.setENV();
 
 class application {
     public client: Discord.Client;
     public api: any;
+    public Logger: Logger;
     public Commands: commands;
     public guild: Discord.Guild;
   
@@ -117,11 +119,11 @@ class application {
                 type: "LISTENING",
               }]
             })
-      
-            this.client.user.setAvatar(process.env.BOT_AVATAR).catch(() => console.log(process.env.BOT_UPDATE_IMAGE_ERROR));
+            
             this.client.user.setUsername(process.env.BOT_NAME)
 
             this.envFetch()
+            this.Logger = new Logger();
             this.Commands = new commands();
         });
     }
