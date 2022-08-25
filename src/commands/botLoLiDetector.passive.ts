@@ -3,7 +3,7 @@ import * as Discord from 'discord.js';
 
 import { LOLI_DETECTOR_MESSAGE } from "../language";
 import { StrategyInfoModel } from "src/models/strategyInfo.model";
-import { IStrategyModel } from 'src/interfaces/strategy';
+import { IStrategyModel, strategyInfo } from 'src/interfaces/strategy';
 
 class BotLoliDetector implements IStrategyModel {
     public getInfo(): StrategyInfoModel {
@@ -13,11 +13,13 @@ class BotLoliDetector implements IStrategyModel {
         }
     }
 
-    public getCommandOrName(): string {
-        return "Detector de quem fala Loli"
+    public getCommandOrName(): strategyInfo {
+        return {
+            command: "Detector de quem fala Loli"
+        }
     }
 
-    public async handleMessage(
+    public async handle(
         userMessage: Discord.Message
     ) {
         var content = userMessage.content.toLowerCase().split(' ')

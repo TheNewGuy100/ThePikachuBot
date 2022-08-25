@@ -1,7 +1,7 @@
 
 import * as Discord from 'discord.js';
 import { StrategyInfoModel } from 'src/models/strategyInfo.model';
-import { IStrategyModel } from 'src/interfaces/strategy';
+import { IStrategyModel, strategyInfo } from 'src/interfaces/strategy';
 import { CHAT_PRAISE_ME } from '../language';
 
 class BotPraise implements IStrategyModel {
@@ -12,11 +12,13 @@ class BotPraise implements IStrategyModel {
         }
     }
 
-    public getCommandOrName(): string {
-        return process.env.PREFIX + process.env.PRAISE_YOU_COMMAND;
+    public getCommandOrName(): strategyInfo {
+        return {
+            command: process.env.PREFIX + process.env.PRAISE_YOU_COMMAND
+        }
     }
 
-    public async handleMessage(
+    public async handle(
         userMessage: Discord.Message
     ) {
         const curses_list = CHAT_PRAISE_ME();

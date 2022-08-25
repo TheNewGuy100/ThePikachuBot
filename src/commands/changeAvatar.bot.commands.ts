@@ -2,7 +2,7 @@ import { Application } from '../application';
 import * as Discord from 'discord.js';
 
 import { StrategyInfoModel } from "../models/strategyInfo.model";
-import { IStrategyModel } from '../interfaces/strategy';
+import { IStrategyModel, strategyInfo } from '../interfaces/strategy';
 import { clearResponses } from '../utils';
 
 class ChangeBotAvatar implements IStrategyModel {
@@ -13,13 +13,30 @@ class ChangeBotAvatar implements IStrategyModel {
         }
     }
 
-    public getCommandOrName(): string {
-        return process.env.ADMIN_PREFIX + 'avatar';
+    public getCommandOrName(): strategyInfo {
+        return { 
+            command: process.env.ADMIN_PREFIX + 'avatar'
+        };
     }
 
-    public async handleMessage(
+    public async handle(
         userMessage: Discord.Message
     ) {
+        if ( userMessage.member.roles.cache.some((role) => role.name === process.env.OWNER_ROLE_NAME || role.name === process.env.ADMINISTRATOR_ROLE_NAME)) {
+            const replyMessage = await userMessage.reply({
+                embeds: [
+                    new Discord.MessageEmbed({
+                        color: 'RED',
+                        author: {
+                            name: 'Você não tem permissão para executar este comando'
+                        }
+                    })
+                ]
+            })
+
+            clearResponses(replyMessage, 8000, userMessage);
+        }
+
         const response: Error & Discord.ClientUser = await Application.client.user.setAvatar(userMessage.content.split(' ')[1]).catch((error) => error) as any
 
         if (response.message) {

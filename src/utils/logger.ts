@@ -1,3 +1,4 @@
+import { eventTable } from './../interfaces/strategy';
 
 import * as Discord from 'discord.js';
 import { Application } from '../application';
@@ -20,6 +21,35 @@ export default class Logger {
                 })
             ]
         })
+    }
+
+    public logUserEvent(User: Discord.User | Discord.PartialUser, EventType: eventTable, Event?: Discord.MessageReaction | Discord.PartialMessageReaction) {
+        this.logChannel.send({
+            embeds: [
+                new Discord.MessageEmbed({
+                    color: 'DARK_GOLD',
+                    description: "<@" + User.id + "> " + "provocou um evento de : \n" + EventType + "\nno canal: " + (Event.message.channel as Discord.BaseGuildTextChannel).name,
+                    author: {
+                        name: "Usuário: " + User.username,
+                    },
+                    thumbnail: {
+                        url:  User.avatarURL()
+                    }
+                })
+            ]
+        })
+    }
+
+    public logError(message: string) {
+        embeds: [
+            new Discord.MessageEmbed({
+                color: 'RED',
+                author: {
+                    name: "ERRO CRÍTICO",
+                },
+                description: message
+            })
+        ]
     }
 
     constructor() {

@@ -20,21 +20,6 @@ import { MODULES_INIT } from "./enviroment.BR.modules";
 
     export const BOT_LOGIN_MESSAGE = (user) => `Logado como ${user}!`
 
-    export const RELATION_ROLES_WITH_EMOJIS = () => [
-        {
-            emoji: Application.welcome_emoji,
-            role: process.env.WELCOME_ROLE
-        },
-        {
-            emoji: Application.osu_emoji,
-            role: process.env.OSU_ROLE
-        },
-        {
-            emoji: Application.garrysmod_emoji,
-            role: process.env.GARRYS_MOD_ROLE
-        }
-    ]
-
     export const CHAT_CURSES = () => [
         {
             img: 'https://66.media.tumblr.com/tumblr_m6rer0aO1X1r2fs0co1_500.gif',

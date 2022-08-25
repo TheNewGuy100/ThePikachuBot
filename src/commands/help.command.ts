@@ -3,7 +3,8 @@ import * as Discord from "discord.js"
 import { MODULES_INIT } from "../language";
 import { Application } from "../application";
 import { StrategyInfoModel, typeToString } from "../models/strategyInfo.model";
-import { IStrategyModel } from "../interfaces/strategy";
+import { IStrategyModel, strategyInfo } from "../interfaces/strategy";
+import { HandlersGenericModel } from "../interfaces/handlers";
 
 class BotHelp implements IStrategyModel {
     public getInfo(): StrategyInfoModel {
@@ -13,11 +14,13 @@ class BotHelp implements IStrategyModel {
         }
     }
 
-    public getCommandOrName(): string {
-        return process.env.PREFIX + process.env.HELP_BOT_COMMAND;
+    public getCommandOrName(): strategyInfo {
+        return {
+            command: process.env.PREFIX + process.env.HELP_BOT_COMMAND
+        }
     }
 
-    public async handleMessage(
+    public async handle(
         userMessage: Discord.Message
     ) {
         const mapModules = MODULES_INIT.map((command) => {
@@ -43,13 +46,13 @@ class BotHelp implements IStrategyModel {
         .setDescription(process.env.HELP_COMMAND_DESCRIPTION)
         .setThumbnail('https://www.clipartmax.com/png/full/99-991676_law-book-icon-png.png')
         .setFooter( process.env.BOT_NAME, 'https://www.pngrepo.com/png/92783/512/checked.png')
-        .setFields(await this.getHelpFields(Application.Commands.classes))
+        .setFields(await this.getHelpFields(Application.Commands.loadedCommands, Application.Commands.loadedHandlers))
         .setTimestamp(new Date())
         
         await userMessage.channel.send({embeds:[exampleEmbed]});
     }
 
-    private async getHelpFields(commandsList: { [key:string]:any }): Promise<Discord.EmbedFieldData[]> {
+    private async getHelpFields(commandsList: { [key:string]:any }, eventsHandlers: {[key:string]: any}): Promise<Discord.EmbedFieldData[]> {
 
         const arrayFields: Discord.EmbedFieldData[] = [];
 
@@ -61,15 +64,8 @@ class BotHelp implements IStrategyModel {
             }
         }
 
-        for (let command of Object.values<IStrategyModel>(commandsList)) {
-            for (let [key, value] of Object.entries(typeToString)) {
-                const comandString = command.getCommandOrName();
-
-                if (command.getInfo().type === key) {
-                    arrayFields[value.position].value += (comandString === null ? "** Detector ** - " : "**" + comandString  + "** - ") + command.getInfo().description + "\n";
-                }
-            }
-        }
+        this.includeCommandOnField(commandsList, arrayFields)
+        this.includeCommandOnField(eventsHandlers, arrayFields)
 
         for (let object of arrayFields) {
             if (object.value === "") {
@@ -78,6 +74,18 @@ class BotHelp implements IStrategyModel {
         }
 
         return arrayFields;
+    }
+
+    private includeCommandOnField(list, arrayFields) {
+        for (let command of Object.values<HandlersGenericModel>(list)) {
+            for (let [key, value] of Object.entries(typeToString)) {
+                const commandData = command.getCommandOrName();
+
+                if (command.getInfo().type === key) {
+                    arrayFields[value.position].value += (commandData.command === null ? "** Detector ** - " : "**" + commandData.command + "** - ") + command.getInfo().description + "\n";
+                }
+            }
+        }
     }
 }
 

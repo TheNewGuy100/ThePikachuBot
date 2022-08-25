@@ -1,8 +1,7 @@
 import * as Discord from 'discord.js';
 
 import { StrategyInfoModel } from "../models/strategyInfo.model";
-import { IStrategyModel } from '../interfaces/strategy';
-import { RELATION_ROLES_WITH_EMOJIS } from '../language';
+import { IStrategyModel, strategyInfo } from '../interfaces/strategy';
 import { Application } from '../application';
 import { WelcomePageMock } from '../models';
 
@@ -14,11 +13,13 @@ class WelcomeNewUser implements IStrategyModel {
         }
     }
 
-    public getCommandOrName(): string {
-        return "Gerador de boas-vidas"
+    public getCommandOrName(): strategyInfo {
+        return {
+            command: "Gerador de boas-vidas"
+        }
     }
 
-    public async handleMessage(
+    public async handle(
         userMessage: Discord.Message
     ) {
         if ( Application.welcome_channel.id === process.env.WELCOME_CHANNEL) {
@@ -28,7 +29,6 @@ class WelcomeNewUser implements IStrategyModel {
         }
     
         let messageSent = await Application.welcome_channel.send(WelcomePageMock);
-        messageSent.react( RELATION_ROLES_WITH_EMOJIS().filter((emoji) => emoji.role === process.env.WELCOME_ROLE)[0].emoji );
     }
 }
 

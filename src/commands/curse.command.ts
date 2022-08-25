@@ -1,5 +1,5 @@
 import * as Discord from "discord.js"
-import { IStrategyModel } from "src/interfaces/strategy";
+import { IStrategyModel, strategyInfo } from "src/interfaces/strategy";
 import { StrategyInfoModel } from "src/models/strategyInfo.model";
 import { CHAT_CURSES } from "../language"
 
@@ -11,11 +11,13 @@ class CurseSomeone implements IStrategyModel {
         }
     }
 
-    public getCommandOrName(): string {
-        return process.env.PREFIX + process.env.CURSE_SOMEONE_COMMAND;
+    public getCommandOrName(): strategyInfo {
+        return {
+            command: process.env.PREFIX + process.env.CURSE_SOMEONE_COMMAND
+        }
     }
 
-    public async handleMessage(
+    public async handle(
         userMessage: Discord.Message
     ) {
         const curses_list = CHAT_CURSES();

@@ -6,7 +6,7 @@ import { clearResponses, searchError } from '../utils';
 import { SEARCH_RESULT_RETURNED_EMPTY, USE_THE_NSFW_CHAT_FOR_THIS } from '../language';
 import { stringRemoveCommandFromParams } from '../utils/stringRemoveCommandFromParam';
 
-import { IStrategyModel } from '../interfaces/strategy';
+import { IStrategyModel, strategyInfo } from '../interfaces/strategy';
 
 class BotRule34SearchNSFW implements IStrategyModel {
     public getInfo(): StrategyInfoModel {
@@ -16,11 +16,13 @@ class BotRule34SearchNSFW implements IStrategyModel {
         }
     }
 
-    public getCommandOrName(): string {
-        return process.env.PREFIX + process.env.RULE34_COMMAND;
+    public getCommandOrName(): strategyInfo {
+        return {
+            command: process.env.PREFIX + process.env.RULE34_COMMAND
+        }
     }
 
-    public async handleMessage(
+    public async handle(
         userMessage: Discord.Message
     ) {
         try {

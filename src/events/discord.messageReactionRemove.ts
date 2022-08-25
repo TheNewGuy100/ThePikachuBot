@@ -1,33 +1,37 @@
-import { RELATION_ROLES_WITH_EMOJIS } from "../language";
 import { Application } from "../application";
 import * as Discord from 'discord.js';
+import { IStrategyModel, strategyInfo } from "../interfaces/strategy";
+import { StrategyInfoModel } from "../models/strategyInfo.model";
+import { HandlersGenericModel } from "src/interfaces/handlers";
 
-Application.client.on('messageReactionRemove' as any, async (reaction: Discord.MessageReaction, user: Discord.User | Discord.PartialUser) => {
+export default class messageReactionRemoveController implements HandlersGenericModel  {
+    public EventsPresent: IStrategyModel[] = [];
 
-    // CATEGORIES PAGE HANDLE
-    if (reaction.message.partial) await reaction.message.fetch();
-    if (reaction.partial) await reaction.fetch();
-    if (user.bot) return;
-    if (!reaction.message.guild) return;
-
-    if (reaction.message.channel.id === process.env.CATEGORY_CHANNEL) {
-        const role_related = RELATION_ROLES_WITH_EMOJIS().filter((array_role) => array_role.emoji === reaction.emoji.id)[0];
-        await reaction.message.guild.members.cache.get(user.id).roles.remove(role_related.role);
-    } else {
-        return;
-    }
-
-    // WELCOME PAGE
-    if (reaction.message.partial) await reaction.message.fetch();
-    if (reaction.partial) await reaction.fetch();
-    if (user.bot) return;
-    if (!reaction.message.guild) return;
-
-    if (reaction.message.channel.id === process.env.WELCOME_CHANNEL) {
-        if (reaction.emoji.name === process.env.WELCOME_ROLE_EMOJI) {
-            await reaction.message.guild.members.cache.get(user.id).roles.remove(Application.welcome_role && Application.member_role);
+    public getInfo(): StrategyInfoModel {
+        return {
+            description: 'Cuida de todos os eventos relacionado a remoção de reações',
+            type: 'event'
         }
-    } else {
-        return;
     }
-})
+
+    public getCommandOrName(): strategyInfo {
+        return { 
+            command: 'ReactionRemoveEvent'
+        };
+    }
+
+    constructor() {
+        Application.client.on('messageReactionRemove', (Listener, User) => {
+            if (User.bot) return;
+            Application.Logger.logUserEvent(User, 'messageReactionRemove', Listener)
+            this.runEventsRelated(Listener, User);
+        })
+    }
+
+    private async runEventsRelated(Listener: Discord.MessageReaction | Discord.PartialMessageReaction, User: Discord.User | Discord.PartialUser) {
+        for (let event of this.EventsPresent) {
+            await event.handleEvents('messageReactionRemove', Listener, User);
+        }
+    }
+}
+

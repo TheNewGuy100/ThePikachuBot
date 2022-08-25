@@ -1,6 +1,6 @@
 import * as Discord from "discord.js";
 import * as Axios from 'axios';
-import { IStrategyModel } from 'src/interfaces/strategy';
+import { IStrategyModel, strategyInfo } from 'src/interfaces/strategy';
 import { clearResponses, searchError } from "../utils/index";
 import { SEARCH_RESULT_RETURNED_EMPTY, USE_THE_NSFW_CHAT_FOR_THIS } from "../language";
 import { Application } from "../application";
@@ -15,11 +15,13 @@ class BotKonachanSearchNSFW implements IStrategyModel {
         }
     }
 
-    public getCommandOrName(): string {
-        return process.env.PREFIX + process.env.KONACHAN_COMMAND;
+    public getCommandOrName(): strategyInfo {
+        return {
+            command: process.env.PREFIX + process.env.KONACHAN_COMMAND
+        }
     }
 
-    public async handleMessage(
+    public async handle(
         userMessage: Discord.Message
     ) {
         try {

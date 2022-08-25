@@ -3,15 +3,16 @@ import commands from './commands/index';
 import * as Config from "./config";
 import * as Discord from 'discord.js';
 
-import { interactionCreate } from "./events/interactionCreate";
 import { BOT_LOGIN_MESSAGE } from "./language";
 import Logger from './utils/logger';
+import { REST } from '@discordjs/rest';
+import { AxiosResponse } from 'axios';
 
 Config.setENV();
 
 class application {
     public client: Discord.Client;
-    public api: any;
+    public api: REST;
     public Logger: Logger;
     public Commands: commands;
     public guild: Discord.Guild;
@@ -23,15 +24,12 @@ class application {
   
     // ROLES
     public member_role: Discord.Role;
-    public welcome_role: Discord.Role;
+    public member_icon: string = '♾️';
     public osu_role: Discord.Role;
   
     // CUSTOM EMOJIS
     public garrysmod_emoji: Discord.GuildEmoji;
     public osu_emoji: Discord.GuildEmoji;
-  
-    // DEFAULT EMOJIS
-    public welcome_emoji: string;
   
     // MUSIC BOT EMOJIS
     public music_module_off_emoji: string;
@@ -63,13 +61,11 @@ class application {
         this.category_channel = await this.client.channels.fetch(process.env.CATEGORY_CHANNEL) as Discord.TextChannel
         this.nsfw_channel = await this.client.channels.fetch(process.env.NSFW_CHANNEL) as Discord.TextChannel
     
-        this.welcome_role = await this.guild.roles.fetch(process.env.WELCOME_ROLE)
         this.member_role = await this.guild.roles.fetch(process.env.MEMBER_ROLE)
         this.osu_role = await this.guild.roles.fetch(process.env.OSU_ROLE)
     
         this.garrysmod_emoji = this.guild.emojis.cache.find( (emoji) => emoji.id === process.env.GARRYS_MOD_EMOJI)
         this.osu_emoji = this.guild.emojis.cache.find( (emoji) => emoji.id === process.env.OSU_EMOJI)
-        this.welcome_emoji = process.env.WELCOME_ROLE_EMOJI
     
         this.music_module_error_emoji = process.env.MUSIC_BOT_ERROR_EMOJI
         this.music_module_music_emoji = process.env.MUSIC_BOT_MUSIC_EMOJI
@@ -79,19 +75,12 @@ class application {
     }
 
     private async initializeAPI () {
-        // this.api = new REST({ version: '9' }).setToken(process.env.BOT_TOKEN);
-        
-        // console.log(process.env.API_SENDING_INFORMATION);
-    
-        // await this.api.put(
-        // Routes.applicationGuildCommands(process.env.BOT_ID, process.env.GUILD_ID),
-        // { body: {} },
-        // ).catch(() => console.log(process.env.API_SENDING_INFORMATION_DENIED))
-        // .then((axiosResponse: AxiosResponse) => {
-        //     if (axiosResponse) {
-        //     console.log(process.env.API_SENDING_INFORMATION_SUCCESS)
-        //     }
-        // });
+        try {
+            this.api = new REST({ version: '9' }).setToken(process.env.BOT_TOKEN);
+            console.log("API loaded")
+        } catch (err) {
+            console.log("API couldn't load")
+        }
     }
 
     private async initializeBOT () {
@@ -101,13 +90,14 @@ class application {
                 Discord.Intents.FLAGS.GUILD_MESSAGES,
                 Discord.Intents.FLAGS.GUILD_MEMBERS,
                 Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-                Discord.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS
+                Discord.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+                Discord.Intents.FLAGS.GUILD_PRESENCES
             ]
         });
 
         await this.client.login(process.env.BOT_TOKEN);
 
-        this.client.on('ready', () => {
+        this.client.on('ready', async (stream: Discord.Client<true>) => {
             console.log(BOT_LOGIN_MESSAGE(this.client.user.tag));
       
             this.client.user.setPresence({
@@ -122,7 +112,7 @@ class application {
             
             this.client.user.setUsername(process.env.BOT_NAME)
 
-            this.envFetch()
+            await this.envFetch();
             this.Logger = new Logger();
             this.Commands = new commands();
         });

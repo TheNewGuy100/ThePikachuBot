@@ -4,7 +4,7 @@ import * as Discord from 'discord.js';
 import { clearResponses } from "../utils";
 import { BOT_HELLO_MESSAGE } from "../language";
 import { StrategyInfoModel } from "src/models/strategyInfo.model";
-import { IStrategyModel } from "src/interfaces/strategy";
+import { IStrategyModel, strategyInfo } from "src/interfaces/strategy";
 
 class BotHello implements IStrategyModel {
     public getInfo(): StrategyInfoModel {
@@ -14,11 +14,13 @@ class BotHello implements IStrategyModel {
         }
     }
 
-    public getCommandOrName(): string {
-        return process.env.PREFIX + process.env.HELLO_COMMAND;
+    public getCommandOrName(): strategyInfo {
+        return {
+            command: process.env.PREFIX + process.env.HELLO_COMMAND
+        }
     }
 
-    public async handleMessage(
+    public async handle(
         userMessage: Discord.Message
     ) {
         const Embed = new Discord.MessageEmbed()

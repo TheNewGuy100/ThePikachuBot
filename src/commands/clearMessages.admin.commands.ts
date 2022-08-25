@@ -1,7 +1,7 @@
 import * as Discord from 'discord.js';
 
 import { StrategyInfoModel } from "src/models/strategyInfo.model";
-import { IStrategyModel } from "src/interfaces/strategy";
+import { IStrategyModel, strategyInfo } from "src/interfaces/strategy";
 import { Application } from '../application';
 import { clearResponses } from '../utils';
 
@@ -13,11 +13,13 @@ class AdminClearMessages implements IStrategyModel {
         }
     }
 
-    public getCommandOrName(): string {
-        return process.env.ADMIN_PREFIX + process.env.CLEAR_ALL_COMMAND;
+    public getCommandOrName(): strategyInfo {
+        return {
+            command: process.env.ADMIN_PREFIX + process.env.CLEAR_ALL_COMMAND
+        }
     }
 
-    public async handleMessage(
+    public async handle(
         userMessage: Discord.Message
     ) {
         try {

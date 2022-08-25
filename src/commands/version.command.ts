@@ -1,6 +1,6 @@
 import * as Discord from "discord.js"
 
-import { IStrategyModel } from "src/interfaces/strategy";
+import { IStrategyModel, strategyInfo } from "src/interfaces/strategy";
 import { StrategyInfoModel } from "src/models/strategyInfo.model";
 import { clearResponses } from "../utils";
 
@@ -12,11 +12,13 @@ class BotVersion implements IStrategyModel {
         }
     }
 
-    public getCommandOrName(): string {
-        return process.env.PREFIX + process.env.BOT_VERSION_COMMAND;
+    public getCommandOrName(): strategyInfo {
+        return {
+            command: process.env.PREFIX + process.env.BOT_VERSION_COMMAND
+        }
     }
 
-    public async handleMessage(
+    public async handle(
         userMessage: Discord.Message
     ) {
         const Embed = new Discord.MessageEmbed()

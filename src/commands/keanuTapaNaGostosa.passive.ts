@@ -1,7 +1,7 @@
 import * as Discord from 'discord.js';
 
 import { StrategyInfoModel } from "src/models/strategyInfo.model";
-import { IStrategyModel } from 'src/interfaces/strategy';
+import { IStrategyModel, strategyInfo } from 'src/interfaces/strategy';
 
 class BotKeanuTapaNaGostosa implements IStrategyModel {
     public getInfo(): StrategyInfoModel {
@@ -11,11 +11,13 @@ class BotKeanuTapaNaGostosa implements IStrategyModel {
         }
     }
 
-    public getCommandOrName(): string {
-        return "O Tapa na Gostosa"
+    public getCommandOrName(): strategyInfo {
+        return {
+            command: "O Tapa na Gostosa"
+        }
     }
 
-    public async handleMessage(
+    public async handle(
         userMessage: Discord.Message
     ) {
         var content = userMessage.content.toLowerCase()
